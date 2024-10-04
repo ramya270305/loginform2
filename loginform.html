@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Login Page</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f6d365, #fda085);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            width: 350px;
+            text-align: center;
+            animation: fadeIn 1s ease;
+            border: 3px solid;
+            border-image: linear-gradient(to right, #f6d365, #fda085) 1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box, linear-gradient(135deg, #f093fb, #f5576c) border-box;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #f093fb, #f5576c) 1;
+            box-shadow: 0 0 8px rgba(240, 147, 251, 0.6);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 35px;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #f093fb, #d8555e);
+        }
+
+        .links {
+            margin-top: 15px;
+        }
+
+        .links a {
+            color: #f093fb;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            text-align: left;
+            display: none;
+            margin-top: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 400px) {
+            .login-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <div class="error" id="usernameError">Username must be at least 3 characters long</div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                <div class="error" id="passwordError">Password must be at least 6 characters long</div>
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+        <div class="links">
+            <a href="/forgot-password">Forgot Password?</a>
+            <a href="/signup">Signup</a>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for form validation
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            let isValid = true;
+
+            // Validate Username
+            const username = document.getElementById('username');
+            const usernameError = document.getElementById('usernameError');
+            if (username.value.trim().length < 3) {
+                usernameError.style.display = 'block';
+                isValid = false;
+            } else {
+                usernameError.style.display = 'none';
+            }
+
+            // Validate Password
+            const password = document.getElementById('password');
+            const passwordError = document.getElementById('passwordError');
+            if (password.value.trim().length < 6) {
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                passwordError.style.display = 'none';
+            }
+
+            // If form is invalid, prevent submission
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+
+        // Toggle Password Visibility
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const toggleIcon = document.querySelector('.toggle-password');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleIcon.textContent = '🙈';  // Switch icon to hide
+            } else {
+                passwordField.type = 'password';
+                toggleIcon.textContent = '👁️';  // Switch icon to show
+            }
+        }
+    </script>
+
+</body>
+</html>
